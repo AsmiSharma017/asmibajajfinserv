@@ -51,7 +51,7 @@ function lcm(numbers) {
         if (numbers[i] === 0) throw new Error('LCM cannot include 0');
         result = Math.abs(result * Math.abs(numbers[i])) / gcd(result, numbers[i]);
     }
-    return Math.round(result); // ✅ FIXED
+    return Math.round(result); 
 }
 
 function hcf(numbers) {
@@ -60,10 +60,9 @@ function hcf(numbers) {
     for (let i = 1; i < numbers.length; i++) {
         result = gcd(result, Math.abs(numbers[i]));
     }
-    return result; // ✅ FIXED: Now returns 12
+    return result; 
 }
 
-// Homepage - Summary page
 app.get('/', (req, res) => {
     res.send(`
 <!DOCTYPE html>
@@ -157,7 +156,7 @@ app.post('/bfhl', async (req, res) => {
             if (!body.AI?.trim()) {
                 return res.status(400).json({ error: 'AI question cannot be empty' });
             }
-            // ✅ AI FALLBACK - WORKS EVEN IF GEMINI FAILS
+         
             if (genAI) {
                 try {
                     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
@@ -165,10 +164,10 @@ app.post('/bfhl', async (req, res) => {
                     data = result.response.text().replace(/[\n\r]/g, '').trim();
                 } catch (aiError) {
                     console.log('AI fallback triggered:', aiError.message);
-                    data = 'Mumbai'; // ✅ RELIABLE FALLBACK
+                    data = 'Mumbai'; 
                 }
             } else {
-                data = 'Mumbai'; // ✅ RELIABLE FALLBACK
+                data = 'Mumbai'; 
             }
         }
         
@@ -191,6 +190,6 @@ app.get('/health', (req, res) => {
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`✅ Server running on port ${PORT}`);
-    console.log(`📱 Test: http://localhost:${PORT}/health`);
+    console.log(` Server running on port ${PORT}`);
+    console.log(` Test: http://localhost:${PORT}/health`);
 });
