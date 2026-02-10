@@ -20,7 +20,7 @@
 | `{"prime":[2,4,7,9,11]}` | `[2,7,11]` |
 | `{"lcm":[12,18,24]}` | `72` |
 | `{"hcf":[24,36,60]}` | `12` |
-| `{"AI":"What is capital of Maharashtra?"}` | `"Mumbai"` |
+| `{"AI":"Number of colors in a rainbow?"}` | `"7"` |
 
 ## Live Deployment
 
