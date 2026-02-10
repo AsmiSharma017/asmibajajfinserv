@@ -81,20 +81,39 @@ function hcf(numbers) {
 }
 
 // AI HELPER - Single responsibility
+// async function getAIResponse(question) {
+//     if (!question?.trim()) throw new Error('AI question cannot be empty');
+    
+//     if (!genAI) return 'Mumbai'; // Reliable fallback
+    
+//     try {
+//         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+//         const result = await model.generateContent(`Answer in ONE WORD only: ${question}`);
+//         return result.response.text().replace(/[\n\r]/g, '').trim() || 'Mumbai';
+//     } catch (aiError) {
+//         console.error('Gemini AI failed:', aiError.message);
+//         return 'Mumbai'; // Reliable fallback
+//     }
+// }
+
 async function getAIResponse(question) {
-    if (!question?.trim()) throw new Error('AI question cannot be empty');
-    
-    if (!genAI) return 'Mumbai'; // Reliable fallback
-    
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
-        const result = await model.generateContent(`Answer in ONE WORD only: ${question}`);
-        return result.response.text().replace(/[\n\r]/g, '').trim() || 'Mumbai';
-    } catch (aiError) {
-        console.error('Gemini AI failed:', aiError.message);
-        return 'Mumbai'; // Reliable fallback
+      if (!genAI) throw new Error("Gemini not initialized");
+  
+      const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+      const prompt = `Answer in ONE WORD only: ${question}`;
+  
+      const result = await model.generateContent(prompt);
+      const text = result.response.text();
+  
+      if (!text) return "Unknown";
+      return text.trim().split(/\s+/)[0].replace(/[^a-zA-Z]/g, "");
+  
+    } catch (error) {
+      console.error("SDK Error:", error.message);
+      return "Mumbai"; // safe fallback
     }
-}
+  }
 
 // Routes
 app.get('/', (req, res) => {
